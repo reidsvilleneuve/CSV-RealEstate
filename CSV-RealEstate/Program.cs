@@ -17,7 +17,7 @@ namespace CSV_RealEstate
 
             StreamReader sr = new StreamReader("../../realestatedata.csv");
             string data = sr.ReadLine();
-            data = sr.ReadLine();
+            data = sr.ReadLine(); //Skip the first line of data.
 
             while(data != null)
             {
@@ -27,28 +27,58 @@ namespace CSV_RealEstate
 
             //Display the average square footage of a Condo sold in the city of Sacramento, 
             // round to 2 decimal points
-             
-            Console.WriteLine(realEstateDataList.Where(
-                x => x.Type == RealEstateData.RealEstateType.Condo).Where(
-                y => y.City.ToLower() == "sacramento").Average(z => z.Sq__ft));
+            Console.WriteLine("Average Sq. Ft. of condos sold in Sacramento: {0}\n", realEstateDataList
+                .Where(x => x.Type == RealEstateData.RealEstateType.Condo)  //Condos only
+                .Where(y => y.City.ToLower() == "sacramento")               //Sacramento only
+                .Average(z => z.Sq__ft)                                     //Sq. Ft. Averaged
+                .ToString("N2"));                                           //Rounded to 2 decimal points
             
-
             //Display the total sales of all residential homes in Elk Grove, display in dollars
-
+            Console.WriteLine("Total sales of all residential homes in Elk Grove: {0}\n", realEstateDataList
+                .Where(x => x.Type == RealEstateData.RealEstateType.Residential)    //Residental only
+                .Where(y => y.City.ToLower() == "elk grove")                        //Elk Grove only
+                .Sum(z => z.Price)                                                  //Sum of all prices
+                .ToString("C"));                                                    //Currency format
+            
             //Display the total number of residential homes sold in the following  
             // zip codes: 95842, 95825, 95815
+            Console.WriteLine("Total number of residential homes in zip codes 95842, 95825, and 95815: {0}\n", realEstateDataList
+                .Where(x => x.Zip == "95842" || x.Zip == "95825" || x.Zip == "95815")   //Specified zip codes only
+                .Count(y => y.Type == RealEstateData.RealEstateType.Residential));      //Count of Residential
 
             //Display the average sale price of a lot in Sacramento, display in dollars
+            Console.WriteLine("Average sale price of a lot in Sacramento: {0}\n", realEstateDataList
+                .Where(x => x.Type == RealEstateData.RealEstateType.Lot)    //Lot only
+                .Where(y => y.City.ToLower() == "sacramento")               //Sacramento only
+                .Average(z => z.Price)                                      //Price average
+                .ToString("C"));                                            //Currency format
 
             //Display the average price per square foot for a condo in Sacramento, display in dollars
+            Console.WriteLine("Average price per squre foot for a condo in Sacramento: {0}\n", realEstateDataList
+                .Where(x => x.Type == RealEstateData.RealEstateType.Condo)  //Condo only
+                .Where(y => y.City.ToLower() == "sacramento")               //Sacramento only
+                .Average(z => z.Price / z.Sq__ft)                           //Average price / average Sq. Ft.
+                .ToString("C"));                                            //Currency format                         
 
             //Display the number of all sales that were completed on a Wednesday
+            Console.WriteLine("Total sales completed on Wednesdays: {0}\n", realEstateDataList
+                .Count(x => x.Sale_date.DayOfWeek == DayOfWeek.Wednesday)); //Count of Wednesdays.
 
             //Display the average number of bedrooms for a residential home in Sacramento when the 
             // price is greater than 300000, round to 2 decimal points
+            Console.WriteLine("Average bedroom count of residental homes worth more than $300,000: {0}", realEstateDataList
+                .Where(x => x.Price > 300000)                                       //Price over 300000 only
+                .Where(y => y.Type == RealEstateData.RealEstateType.Residential)    //Residential only
+                .Average(z => z.Beds)                                               //Average beds
+                .ToString("N2"));                                                   //Rounded to 2 decimals.
             
             //Extra Credit:
             //Display top 5 cities and the number of homes sold (using the GroupBy extension)
+
+            //IEnumerable<IGrouping<bool, string>> groups = realEstateDataList.GroupBy(x => (x.City == "SACRAMENTO"));
+
+            Console.WriteLine("Top 5 cities with most homes sold: {0}", realEstateDataList
+                .GroupBy(x => x.City));
 
             Console.ReadKey();
         }
@@ -62,7 +92,6 @@ namespace CSV_RealEstate
     public class RealEstateData
     {
         //Create properties, using the correct data types (not all are strings) for all columns of the CSV
-        //public enum ResidentialType { Residential = 1, Condo, MultiFamily, Unkown }
         public enum RealEstateType { Residential = 1, Condo, Multi_Family, Unkown, Lot }
 
         public string Street { get; set; }
