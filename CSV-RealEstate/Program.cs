@@ -28,37 +28,36 @@ namespace CSV_RealEstate
             //Display the average square footage of a Condo sold in the city of Sacramento, 
             // round to 2 decimal points
             Console.WriteLine("Average Sq. Ft. of condos sold in Sacramento: {0}\n", realEstateDataList
-                .Where(x => x.Type == RealEstateType.Condo)  //Condos only
-                .Where(y => y.City.ToLower() == "sacramento")               //Sacramento only
-                .Average(z => z.Sq__ft)                                     //Sq. Ft. Averaged
-                .ToString("N2"));                                           //Rounded to 2 decimal points
+                .Where(x => x.Type == RealEstateType.Condo)     //Condos only
+                .Average(z => z.Sq__ft)                         //Sq. Ft. Averaged
+                .ToString("N2"));                               //Rounded to 2 decimal points
             
             //Display the total sales of all residential homes in Elk Grove, display in dollars
             Console.WriteLine("Total sales of all residential homes in Elk Grove: {0}\n", realEstateDataList
-                .Where(x => x.Type == RealEstateType.Residential)    //Residental only
-                .Where(y => y.City.ToLower() == "elk grove")                        //Elk Grove only
-                .Sum(z => z.Price)                                                  //Sum of all prices
-                .ToString("C"));                                                    //Currency format
+                .Where(x => x.Type == RealEstateType.Residential)   //Residental only
+                .Where(y => y.City.ToLower() == "elk grove")        //Elk Grove only
+                .Sum(z => z.Price)                                  //Sum of all prices
+                .ToString("C"));                                    //Currency format
             
             //Display the total number of residential homes sold in the following  
             // zip codes: 95842, 95825, 95815
             Console.WriteLine("Total number of residential homes in zip codes 95842, 95825, and 95815: {0}\n", realEstateDataList
                 .Where(x => x.Zip == "95842" || x.Zip == "95825" || x.Zip == "95815")   //Specified zip codes only
-                .Count(y => y.Type == RealEstateType.Residential));      //Count of Residential
+                .Count(y => y.Type == RealEstateType.Residential));                     //Count of Residential
 
             //Display the average sale price of a lot in Sacramento, display in dollars
             Console.WriteLine("Average sale price of a lot in Sacramento: {0}\n", realEstateDataList
-                .Where(x => x.Type == RealEstateType.Lot)    //Lot only
-                .Where(y => y.City.ToLower() == "sacramento")               //Sacramento only
-                .Average(z => z.Price)                                      //Price average
-                .ToString("C"));                                            //Currency format
+                .Where(x => x.Type == RealEstateType.Lot)       //Lot only
+                .Where(y => y.City.ToLower() == "sacramento")   //Sacramento only
+                .Average(z => z.Price)                          //Price average
+                .ToString("C"));                                //Currency format
 
             //Display the average price per square foot for a condo in Sacramento, display in dollars
             Console.WriteLine("Average price per squre foot for a condo in Sacramento: {0}\n", realEstateDataList
-                .Where(x => x.Type == RealEstateType.Condo)  //Condo only
-                .Where(y => y.City.ToLower() == "sacramento")               //Sacramento only
-                .Average(z => z.Price / z.Sq__ft)                           //Average price / average Sq. Ft.
-                .ToString("C"));                                            //Currency format                         
+                .Where(x => x.Type == RealEstateType.Condo)     //Condo only
+                .Where(y => y.City.ToLower() == "sacramento")   //Sacramento only
+                .Average(z => z.Price / z.Sq__ft)               //Average price / average Sq. Ft.
+                .ToString("C"));                                //Currency format                         
 
             //Display the number of all sales that were completed on a Wednesday
             Console.WriteLine("Total sales completed on Wednesdays: {0}\n", realEstateDataList
