@@ -67,10 +67,10 @@ namespace CSV_RealEstate
             //Display the average number of bedrooms for a residential home in Sacramento when the 
             // price is greater than 300000, round to 2 decimal points
             Console.WriteLine("Average bedroom count of residental homes worth more than $300,000: {0}\n", realEstateDataList
-                .Where(x => x.Price > 300000)                                       //Price over 300000 only
+                .Where(x => x.Price > 300000)                        //Price over 300000 only
                 .Where(y => y.Type == RealEstateType.Residential)    //Residential only
-                .Average(z => z.Beds)                                               //Average beds
-                .ToString("N2"));                                                   //Rounded to 2 decimals.
+                .Average(z => z.Beds)                                //Average beds
+                .ToString("N2"));                                    //Rounded to 2 decimals.
             
             //Extra Credit:
             //Display top 5 cities and the number of homes sold (using the GroupBy extension)
