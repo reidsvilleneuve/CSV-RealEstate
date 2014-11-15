@@ -66,7 +66,7 @@ namespace CSV_RealEstate
 
             //Display the average number of bedrooms for a residential home in Sacramento when the 
             // price is greater than 300000, round to 2 decimal points
-            Console.WriteLine("Average bedroom count of residental homes worth more than $300,000: {0}", realEstateDataList
+            Console.WriteLine("Average bedroom count of residental homes worth more than $300,000: {0}\n", realEstateDataList
                 .Where(x => x.Price > 300000)                                       //Price over 300000 only
                 .Where(y => y.Type == RealEstateData.RealEstateType.Residential)    //Residential only
                 .Average(z => z.Beds)                                               //Average beds
@@ -75,12 +75,15 @@ namespace CSV_RealEstate
             //Extra Credit:
             //Display top 5 cities and the number of homes sold (using the GroupBy extension)
 
-            //IEnumerable<IGrouping<bool, string>> groups = realEstateDataList.GroupBy(x => (x.City == "SACRAMENTO"));
+            Console.WriteLine("Top 5 cities with most homes sold:\n" + string.Join("\n", realEstateDataList
+                .GroupBy(x => x.City)                                                                   //Group by city
+                .OrderByDescending(y => y.Sum(z => z.Price))                                            //Largest sum first
+                    .Select(a =>                                                                //In this list, print...                                                           
+                        "-" + a.Key.First() + a.Key.Substring(1, a.Key.Length - 1).ToLower()    //"-" + Proper caps of city
+                        + ": " + a.Sum(b => b.Price).ToString("C"))                             //": " + formatted sum of sales
+                    .Take(5)));                                                                 //Only show first 5.
 
-            Console.WriteLine("Top 5 cities with most homes sold: {0}", realEstateDataList
-                .GroupBy(x => x.City));
-
-            Console.ReadKey();
+           Console.ReadKey();
         }
     }
 
